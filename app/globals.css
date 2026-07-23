@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 隐藏水印 + 显示自定义文字 */
+#edgeone-watermark {
+  display: none !important;
+}
+
+body::after {
+  content: "一叶知秋 | 项目演示yztcf.de5.net" !important;
+  position: fixed !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-size: 13px !important;
+  color: #666 !important;
+  z-index: 99999 !important;
+  white-space: nowrap !important;
+}
 
 :root {
   --background: #030712;

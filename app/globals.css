@@ -2,31 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 最高优先级隐藏EdgeOne水印容器 */
-#edgeone-watermark {
-  display: none !important;
-  visibility: hidden !important;
-  width: 0 !important;
-  height: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  z-index: -99999 !important;
-  pointer-events: none !important;
-}
-
-/* 自定义底部文字 */
-body::after {
-  content: "一叶知秋 | 项目演示yztcf.de5.net";
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  color: #666;
-  z-index: 99999;
-  white-space: nowrap;
-}
 
 
 

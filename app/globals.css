@@ -59,8 +59,8 @@ body {
   .light .prose-chat a { @apply text-blue-600 underline hover:text-blue-700; }
 }
 
-/* 隐藏EdgeOne平台底部提示容器 */
-div[style*="text-align:center"][style*="margin"] {
+/* 精准隐藏EdgeOne水印容器（匹配id=edgeone-watermark） */
+#edgeone-watermark {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;

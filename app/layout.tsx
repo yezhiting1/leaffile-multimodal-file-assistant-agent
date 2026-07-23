@@ -27,30 +27,51 @@ import { useEffect } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // 移除 EdgeOne 水印
-    const removeWatermark = () => {
-      const watermark = document.getElementById('edgeone-watermark');
-      if (watermark) {
-        watermark.remove();
-        console.log('✅ EdgeOne 水印已移除');
-        return true;
-      }
-      return false;
+    // 暴力删除所有可能的水印
+    const removeAllWatermarks = () => {
+      // 方法1：通过 ID
+      const el1 = document.getElementById('edgeone-watermark');
+      if (el1) el1.remove();
+
+      // 方法2：通过属性选择器
+      const els = document.querySelectorAll([
+        '[id*="edgeone"]',
+        '[id*="watermark"]',
+        '[class*="edgeone"]',
+        '[class*="watermark"]',
+        'div[style*="background-image: linear-gradient"]',
+        'div[style*="rgba(0, 0, 0, 0.8)"]'
+      ].join(','));
+      
+      els.forEach(el => {
+        // 额外检查是否包含水印文本
+        if (el.textContent?.includes('For demonstration') || 
+            el.textContent?.includes('testing purposes')) {
+          el.remove();
+        }
+      });
     };
 
     // 立即执行
-    removeWatermark();
+    removeAllWatermarks();
 
-    // 监听 DOM 变化，如果水印被重新插入则再次移除
+    // 每 500ms 检查一次，持续清除
+    const interval = setInterval(removeAllWatermarks, 500);
+
+    // 用 MutationObserver 监听变化
     const observer = new MutationObserver(() => {
-      removeWatermark();
+      removeAllWatermarks();
     });
     observer.observe(document.body, { 
       childList: true, 
-      subtree: true 
+      subtree: true,
+      attributes: true 
     });
 
-    return () => observer.disconnect();
+    return () => {
+      clearInterval(interval);
+      observer.disconnect();
+    };
   }, []);
 
   return (

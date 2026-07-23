@@ -92,14 +92,14 @@ interface I18nContextType {
 }
 
 const I18nContext = createContext<I18nContextType>({
-  locale: 'en',
+  locale: 'zh',
   setLocale: () => {},
-  t: translations.en,
+  t: translations.zh,
 });
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   // Default to English for first-time visitors.
-  const [locale, setLocale] = useState<Locale>('en');
+  const [locale, setLocale] = useState<Locale>('zh');
   const t = translations[locale];
   return (
     <I18nContext.Provider value={{ locale, setLocale, t }}>

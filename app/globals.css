@@ -59,16 +59,17 @@ body {
   .light .prose-chat a { @apply text-blue-600 underline hover:text-blue-700; }
 }
 
-/* 高权重强制隐藏EdgeOne水印容器 */
+/* 超强权重覆盖内联样式，隐藏EdgeOne水印 */
 div#edgeone-watermark {
   all: unset !important;
   display: none !important;
   visibility: hidden !important;
-  width: 0 !important;
-  height: 0 !important;
+  width: 0px !important;
+  height: 0px !important;
   padding: 0 !important;
   margin: 0 !important;
   overflow: hidden !important;
+  position: static !important;
   z-index: -99999 !important;
   pointer-events: none !important;
 }

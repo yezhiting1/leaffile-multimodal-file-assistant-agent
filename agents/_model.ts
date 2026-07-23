@@ -7,7 +7,7 @@ export function resolveModelName(env?: Record<string, string | undefined>): stri
 }
 /**
  * Map EdgeOne AI Gateway env vars to the names the Claude Agent SDK expects.
- * For OpenAI-compatible APIs (like Agnes AI), use OPENAI_ prefixed vars.
+ * Supports both Anthropic and OpenAI-compatible protocols.
  * Returns a Record to be merged into query() options.env — does NOT mutate process.env.
  */
 export function collectGatewayEnv(env: Record<string, string | undefined>): Record<string, string> {

@@ -27,13 +27,11 @@ import { useEffect } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // 暴力删除所有可能的水印
+    // 删除水印
     const removeAllWatermarks = () => {
-      // 方法1：通过 ID
       const el1 = document.getElementById('edgeone-watermark');
       if (el1) el1.remove();
 
-      // 方法2：通过属性选择器
       const els = document.querySelectorAll([
         '[id*="edgeone"]',
         '[id*="watermark"]',
@@ -44,7 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       ].join(','));
       
       els.forEach(el => {
-        // 额外检查是否包含水印文本
         if (el.textContent?.includes('For demonstration') || 
             el.textContent?.includes('testing purposes')) {
           el.remove();
@@ -52,13 +49,42 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       });
     };
 
-    // 立即执行
+    // 添加自定义底部文字
+    const addFooter = () => {
+      // 检查是否已存在，避免重复添加
+      if (document.getElementById('custom-footer')) return;
+      
+      const footer = document.createElement('div');
+      footer.id = 'custom-footer';
+      footer.textContent = '一叶知秋 | 项目演示yztcf.de5.net';
+      Object.assign(footer.style, {
+        position: 'fixed',
+        bottom: '12px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        fontSize: '13px',
+        color: '#666',
+        zIndex: '99999',
+        whiteSpace: 'nowrap',
+        pointerEvents: 'none',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      });
+      document.body.appendChild(footer);
+    };
+
+    // 执行
     removeAllWatermarks();
+    addFooter();
 
-    // 每 500ms 检查一次，持续清除
-    const interval = setInterval(removeAllWatermarks, 500);
+    // 持续监控
+    const interval = setInterval(() => {
+      removeAllWatermarks();
+      // 如果底部文字被删了，重新添加
+      if (!document.getElementById('custom-footer')) {
+        addFooter();
+      }
+    }, 500);
 
-    // 用 MutationObserver 监听变化
     const observer = new MutationObserver(() => {
       removeAllWatermarks();
     });

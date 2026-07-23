@@ -58,3 +58,11 @@ body {
   .light .prose-chat hr { @apply my-3 border-gray-200; }
   .light .prose-chat a { @apply text-blue-600 underline hover:text-blue-700; }
 }
+
+/* 隐藏EdgeOne平台演示免责提示 */
+body div:contains("For demonstration and testing purposes only") {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
